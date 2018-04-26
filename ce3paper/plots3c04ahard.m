@@ -1,0 +1,227 @@
+%sso=load sso
+clear all;close all
+sbi=load('/Users/zzb/Downloads/temp/DATA/post/s3c04a/soft/orbit/d_F2F1.dat');
+sbir=load('/Users/zzb/Downloads/temp/DATA/post/s3c04a/soft/orbit/r_F2F1.dat');
+
+figure
+%plot sbi delay
+stnm=['BJ';'KM';'UR';'TM'];
+nsite=[2 3 4 5];
+k=0;
+for i=1:length(nsite)-1
+    for j=i+1:length(nsite)
+        clear indx sbie t
+        indx=find(sbi(:,7)==nsite(i) & sbi(:,8)==nsite(j));
+        sbie=sbi(indx,:);
+        t=sbie(:,4)+sbie(:,5)/60+sbie(:,6)/3600;
+        k=k+1;
+
+        subplot(6,2,2*k-1);
+        plot(t,sbie(:,9),'b.');
+        ylabel([stnm(i,:) '-' stnm(j,:)])
+        ylim([-2 2]);xlim([3 12]);
+        if k==1
+        title('Delay(ns)'); 
+        end
+        if k==6
+        xlabel('hr')
+        end
+        grid on
+        
+        clear indx sbie t
+        indx=find(sbir(:,7)==nsite(i) & sbir(:,8)==nsite(j));
+        sbier=sbir(indx,:);
+        tr=sbier(:,4)+sbier(:,5)/60+sbier(:,6)/3600;
+        %k=k+1;
+
+        subplot(6,2,2*k);
+        plot(tr,sbier(:,9),'b.');
+        ylabel([stnm(i,:) '-' stnm(j,:)])
+        ylim([-2 2]);xlim([3 12]);
+        if k==1
+        title('Rate(ps)');
+        elseif k==6
+        xlabel('hr')
+        end
+        grid on
+    end
+end
+
+figure %error plot
+k=0;
+for i=1:length(nsite)-1
+    for j=i+1:length(nsite)
+        clear indx sbie t
+        indx=find(sbi(:,7)==nsite(i) & sbi(:,8)==nsite(j));
+        sbie=sbi(indx,:);
+        t=sbie(:,4)+sbie(:,5)/60+sbie(:,6)/3600;
+        k=k+1;
+
+        subplot(6,2,2*k-1);
+        plot(t,sbie(:,10),'b.');
+        ylabel([stnm(i,:) '-' stnm(j,:)])
+        ylim([0 2]);xlim([3 12]);
+        if k==1
+        title('Delay(ns)'); 
+        end
+        if k==6
+        xlabel('hr')
+        end
+        grid on
+        
+        clear indx sbie t
+        indx=find(sbir(:,7)==nsite(i) & sbir(:,8)==nsite(j));
+        sbier=sbir(indx,:);
+        tr=sbier(:,4)+sbier(:,5)/60+sbier(:,6)/3600;
+        %k=k+1;
+
+        subplot(6,2,2*k);
+        plot(tr,sbier(:,10),'b.');
+        ylabel([stnm(i,:) '-' stnm(j,:)])
+        ylim([0 3]);xlim([3 12]);
+        if k==1
+        title('Rate(ps)');
+        elseif k==6
+        xlabel('hr')
+        end
+        grid on
+    end
+end
+
+
+clearvars -except stnm nsite
+sbi=load('/Users/zzb/Downloads/temp/DATA/post/s3c04a/soft/orbit/d_F1.dat');
+sbir=load('/Users/zzb/Downloads/temp/DATA/post/s3c04a/soft/orbit/r_F1.dat');
+figure
+k=0;
+for i=1:length(nsite)-1
+    for j=i+1:length(nsite)
+        clear indx sbie t
+        indx=find(sbi(:,7)==nsite(i) & sbi(:,8)==nsite(j));
+        sbie=sbi(indx,:);
+        t=sbie(:,4)+sbie(:,5)/60+sbie(:,6)/3600;
+        k=k+1;
+
+        subplot(6,2,2*k-1);
+        plot(t,sbie(:,14),'b.');
+        ylabel([stnm(i,:) '-' stnm(j,:)])
+        %ylim([-10 10])
+        switch k
+            case 1
+                title('Res. delay(ns)');
+                ylim([-6 4]);
+            case 2
+                ylim([-10 0]);
+            case 3
+                ylim([-5 5]);
+            case 4  
+                ylim([-8 2]);
+            case 5
+                ylim([0 10]);
+            case 6
+                ylim([0 10]);  
+        end
+        if k==6
+        xlabel('hr')
+        end
+        grid on
+        xlim([2 14])
+        
+        clear indx sbie t
+        indx=find(sbir(:,7)==nsite(i) & sbir(:,8)==nsite(j));
+        sbier=sbir(indx,:);
+        tr=sbier(:,4)+sbier(:,5)/60+sbier(:,6)/3600;
+        %k=k+1;
+
+        subplot(6,2,2*k);
+        plot(tr,sbier(:,14),'b.');
+        ylabel([stnm(i,:) '-' stnm(j,:)])
+        ylim([-10 10])
+        if k==1
+        title('Rate(ps)');
+        elseif k==6
+        xlabel('hr')
+        end
+        grid on
+        xlim([2 14])
+    end
+end
+
+
+figure
+k=0;
+for i=1:length(nsite)-1
+    for j=i+1:length(nsite)
+        clear indx sbie t
+        indx=find(sbi(:,7)==nsite(i) & sbi(:,8)==nsite(j));
+        sbie=sbi(indx,:);
+        t=sbie(:,4)+sbie(:,5)/60+sbie(:,6)/3600;
+        k=k+1;
+
+        subplot(6,2,2*k-1);
+        plot(t,sbie(:,13),'b.');
+        ylabel([stnm(i,:) '-' stnm(j,:)])
+        
+    end
+end
+
+
+
+clearvars -except stnm nsite
+sbi=load('/Users/zzb/Downloads/temp/DATA/post/s3c04a/soft/orbit/d_F2.dat');
+sbir=load('/Users/zzb/Downloads/temp/DATA/post/s3c04a/soft/orbit/r_F2.dat');
+figure
+k=0;
+for i=1:length(nsite)-1
+    for j=i+1:length(nsite)
+        clear indx sbie t
+        indx=find(sbi(:,7)==nsite(i) & sbi(:,8)==nsite(j));
+        sbie=sbi(indx,:);
+        t=sbie(:,4)+sbie(:,5)/60+sbie(:,6)/3600;
+        k=k+1;
+
+        subplot(6,2,2*k-1);
+        plot(t,sbie(:,14),'b.');
+        ylabel([stnm(i,:) '-' stnm(j,:)])
+        %ylim([-10 10])
+        switch k
+            case 1
+                title('Res. delay(ns)');
+                ylim([-6 4]);
+            case 2
+                ylim([-10 0]);
+            case 3
+                ylim([-5 5]);
+            case 4  
+                ylim([-8 2]);
+            case 5
+                ylim([0 10]);
+            case 6
+                ylim([0 10]);  
+        end
+        if k==6
+        xlabel('hr')
+        end
+        grid on
+        xlim([2 14])
+        
+        clear indx sbie t
+        indx=find(sbir(:,7)==nsite(i) & sbir(:,8)==nsite(j));
+        sbier=sbir(indx,:);
+        tr=sbier(:,4)+sbier(:,5)/60+sbier(:,6)/3600;
+        %k=k+1;
+
+        subplot(6,2,2*k);
+        plot(tr,sbier(:,14),'b.');
+        ylabel([stnm(i,:) '-' stnm(j,:)])
+        ylim([-10 10])
+        if k==1
+        title('Rate(ps)');
+        elseif k==6
+        xlabel('hr')
+        end
+        grid on
+        xlim([2 14])
+    end
+end
+
