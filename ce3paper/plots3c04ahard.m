@@ -1,12 +1,16 @@
 %sso=load sso
 clear all;close all
-sbi=load('/Users/zzb/Downloads/temp/DATA/post/s3c04a/soft/orbit/d_F2F1.dat');
-sbir=load('/Users/zzb/Downloads/temp/DATA/post/s3c04a/soft/orbit/r_F2F1.dat');
-
+%sbi=load('/Users/zzb/Downloads/temp/DATA/post/s3c04a/soft/orbit/d_F2F1.dat');
+%sbir=load('/Users/zzb/Downloads/temp/DATA/post/s3c04a/soft/orbit/r_F2F1.dat');
+sbi=load('d_F2F1.dat');
+sbir=load('r_F2F1.dat');
 figure
 %plot sbi delay
 stnm=['BJ';'KM';'UR';'TM'];
+bslnnm=['BJ-KM';'BJ-UR';'BJ-TM';'KM-UR';'KM-TM';'UR-TM'];
 nsite=[2 3 4 5];
+cs=8.1;
+ce=8.3;
 k=0;
 for i=1:length(nsite)-1
     for j=i+1:length(nsite)
@@ -87,6 +91,38 @@ for i=1:length(nsite)-1
         grid on
     end
 end
+
+
+figure
+%pick out the data in the span of 9.85-10.05
+k=0;
+for i=1:length(nsite)-1
+    for j=i+1:length(nsite)
+        clear indx sbie t
+        indx=find(sbi(:,7)==nsite(i) & sbi(:,8)==nsite(j));
+        sbie=sbi(indx,:);
+        t=sbie(:,4)+sbie(:,5)/60+sbie(:,6)/3600;
+        indx2=find(t>cs & t<ce);
+        sbie2=sbie(indx2,:);
+        
+        k=k+1;
+        A(k).ts=[t(indx2),sbie2(:,9)];
+        subplot(6,1,k);
+        plot(t(indx2),sbie2(:,9),'r.');
+        ylabel([stnm(i,:) '-' stnm(j,:)]);
+    end
+end
+  
+%close all
+figure
+for i=1:6
+subplot(3,2,i)
+B=A(i).ts(:,1);
+C=A(i).ts(:,2);       
+period_mean_fft(C)  
+ylabel(bslnnm(i,:))
+end        
+        
 
 
 clearvars -except stnm nsite
